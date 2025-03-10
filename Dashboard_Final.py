@@ -7,12 +7,14 @@ import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
 from datetime import datetime
+from flask import Flask
 
 # Load the CSV files
 ai_subset = pd.read_excel("Salary_Sub.xlsx")
 
 # Dash app setup
 app = dash.Dash(__name__)
+server = app.server
 
 app.layout = html.Div([
     html.H1("AI Job Market Dashboard"),

@@ -15,7 +15,8 @@ from dash import Dash
 ai_subset = pd.read_excel("Salary_Sub.xlsx")
 
 # Dash app setup
-app = dash.Dash(__name__)
+app = Dash(__name__)
+
 server = app.server
 
 app.layout = html.Div([

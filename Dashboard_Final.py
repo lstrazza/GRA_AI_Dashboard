@@ -9,17 +9,7 @@ from dash.dependencies import Input, Output
 from datetime import datetime
 
 # Load the CSV files
-df = pd.read_csv("Sample.csv")
-skills_df = pd.read_csv("skills_cat.csv")
-
-# Split 'skills' column by "|" and expand into separate rows
-df = df.assign(skills=df['skills'].str.split('|')).explode('skills')
-
-# Merge dataframes on the 'skills' and 'skill_id' columns
-merged_df = df.merge(skills_df, left_on='skills', right_on='skill_id', how='inner')
-merged_df = merged_df.drop(columns=['skills_name'])
-
-ai_subset = merged_df[merged_df['skill_subcategory'].isin([118, 372])]
+ai_subset = pd.read_csv("Salary_Sub.csv")
 
 # Dash app setup
 app = dash.Dash(__name__)
@@ -90,4 +80,4 @@ def update_plots(skills, education_levels, years):
     return fig1, fig2, fig3, fig4
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8080)
+    app.run_server(debug=True, host='0.0.0.0', port=10000)

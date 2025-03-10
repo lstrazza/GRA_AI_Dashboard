@@ -9,7 +9,7 @@ from dash.dependencies import Input, Output
 from datetime import datetime
 
 # Load the CSV files
-ai_subset = pd.read_csv("Salary_Sub.xlsx")
+ai_subset = pd.read_excel("Salary_Sub.xlsx")
 
 # Dash app setup
 app = dash.Dash(__name__)

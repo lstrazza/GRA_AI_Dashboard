@@ -8,6 +8,8 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 from datetime import datetime
 from flask import Flask
+import os
+from dash import Dash
 
 # Load the CSV files
 ai_subset = pd.read_excel("Salary_Sub.xlsx")
@@ -81,5 +83,7 @@ def update_plots(skills, education_levels, years):
     
     return fig1, fig2, fig3, fig4
 
+port = int(os.getenv('PORT', 10000))
+
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=10000)
+    app.run_server(debug=True, host='0.0.0.0', port=port)

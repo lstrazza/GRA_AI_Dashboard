@@ -1,5 +1,8 @@
-dash==2.18.2
-plotly
+dash
 pandas
-gunicorn
+numpy
+plotly
+matplotlib
 seaborn
+plotly-express
+gunicorn

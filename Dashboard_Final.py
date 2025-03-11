@@ -86,5 +86,5 @@ def update_plots(skills, education_levels, years):
 
 port = int(os.getenv('PORT', 10000))
 
-if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    app.run_server(debug=True)

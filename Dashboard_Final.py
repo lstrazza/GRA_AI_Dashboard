@@ -17,7 +17,7 @@ ai_subset = pd.read_excel("Salary_Sub.xlsx")
 # Dash app setup
 app = Dash(__name__)
 
-server = app.server
+
 
 app.layout = html.Div([
     html.H1("AI Job Market Dashboard"),
@@ -84,7 +84,8 @@ def update_plots(skills, education_levels, years):
     
     return fig1, fig2, fig3, fig4
 
-port = int(os.getenv('PORT', 10000))
+#port = int(os.getenv('PORT', 10000))
+server = app.server
 
 if __name__ == "__main__":
     app.run_server(debug=True)

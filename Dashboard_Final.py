@@ -88,8 +88,7 @@ def update_plots(skills, education_levels, years, skill_subcategories):
         x='min_edulevels_name',
         y='count',
         color='min_edulevels_name',
-        title="Education Requirements by Skill",
-        barmode='group'  # Groups bars to remove spacing
+        title="Education Requirements by Skill"
     )
 
     # Customizing Axis Titles
@@ -136,7 +135,7 @@ def update_plots(skills, education_levels, years, skill_subcategories):
         city_edu_counts,
         x='city_name',
         y='count',
-        color='min_edulevels_name',  # Retain color for visual clarity
+        color='city_name',  # Retain color for visual clarity
         title="Education Level by Top Cities"
     )
 

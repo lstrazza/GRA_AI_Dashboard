@@ -41,7 +41,7 @@ app.layout = html.Div([
     options=[{'label': subcat, 'value': subcat} for subcat in ai_subset['skill_subcategory_name'].unique()],
     multi=True,
     placeholder="Filter by Skill Subcategory"
-    )
+    ),
     
     dcc.RangeSlider(
         id='year-filter',

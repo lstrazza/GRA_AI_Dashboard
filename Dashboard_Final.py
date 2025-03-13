@@ -36,6 +36,13 @@ app.layout = html.Div([
         placeholder="Filter by Education Level"
     ),
     
+    dcc.Dropdown(
+    id='subcategory-filter',
+    options=[{'label': subcat, 'value': subcat} for subcat in ai_subset['skill_subcategory_name'].unique()],
+    multi=True,
+    placeholder="Filter by Skill Subcategory"
+    )
+    
     dcc.RangeSlider(
         id='year-filter',
         min=ai_subset['year'].min(),
@@ -57,23 +64,32 @@ app.layout = html.Div([
      Output('education-by-city-plot', 'figure')],
     [Input('skill-filter', 'value'),
      Input('education-filter', 'value'),
-     Input('year-filter', 'value')]
+     Input('year-filter', 'value'),
+     Input('subcategory-filter', 'value')]  # <-- New Input for Skill Subcategory
 )
-def update_plots(skills, education_levels, years):
+def update_plots(skills, education_levels, years, skill_subcategories):
+    # Updated function code as shown above
     filtered_df = ai_subset[(ai_subset['year'] >= years[0]) & (ai_subset['year'] <= years[1])]
+    
     if skills:
         filtered_df = filtered_df[filtered_df['skill_name'].isin(skills)]
+        
     if education_levels:
         filtered_df = filtered_df[filtered_df['min_edulevels_name'].isin(education_levels)]
-    
+        
+    if skill_subcategories:
+        filtered_df = filtered_df[filtered_df['skill_subcategory_name'].isin(skill_subcategories)]
+
     # Plot 1: Education Requirements by Skill
     skill_edu_counts = filtered_df.groupby(['skill_name', 'min_edulevels_name']).size().reset_index(name='count')
+    
     fig1 = px.bar(
         skill_edu_counts,
-        x='min_edulevels_name',
+        x='skill_name',
         y='count',
         color='min_edulevels_name',
-        title="Education Requirements by Skill"
+        title="Education Requirements by Skill",
+        barmode='group'  # Groups bars to remove spacing
     )
 
     # Customizing Axis Titles
@@ -114,13 +130,16 @@ def update_plots(skills, education_levels, years):
     top_cities = filtered_df['city_name'].value_counts().nlargest(10).index
     city_edu_counts = filtered_df[filtered_df['city_name'].isin(top_cities)]\
         .groupby(['city_name', 'min_edulevels_name']).size().reset_index(name='count')
+        
     fig4 = px.bar(
         city_edu_counts,
         x='city_name',
         y='count',
-        color='city_name',
-        title="Education Level by Top Cities"
+        color='min_edulevels_name',  # Keeps color differentiation
+        title="Education Level by Top Cities",
+        barmode='group'  # Removes spacing between bar segments
     )
+
     fig4.update_layout(
         xaxis_title="City",
         yaxis_title="Number of Job Listings"

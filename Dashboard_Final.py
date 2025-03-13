@@ -85,7 +85,7 @@ def update_plots(skills, education_levels, years, skill_subcategories):
     
     fig1 = px.bar(
         skill_edu_counts,
-        x='skill_name',
+        x='min_edulevels_name',
         y='count',
         color='min_edulevels_name',
         title="Education Requirements by Skill",
@@ -130,18 +130,20 @@ def update_plots(skills, education_levels, years, skill_subcategories):
     top_cities = filtered_df['city_name'].value_counts().nlargest(10).index
     city_edu_counts = filtered_df[filtered_df['city_name'].isin(top_cities)]\
         .groupby(['city_name', 'min_edulevels_name']).size().reset_index(name='count')
-        
+    city_edu_counts['combined_label'] = city_edu_counts['city_name'] + " - " + city_edu_counts['min_edulevels_name']
+
+    # Plot with combined labels to remove gaps
     fig4 = px.bar(
         city_edu_counts,
-        x='city_name',
+        x='combined_label',
         y='count',
-        color='min_edulevels_name',  # Keeps color differentiation
-        title="Education Level by Top Cities",
-        barmode='group'  # Removes spacing between bar segments
+        color='min_edulevels_name',  # Retain color for visual clarity
+        title="Education Level by Top Cities"
     )
 
+    # Customizing Axis Titles
     fig4.update_layout(
-        xaxis_title="City",
+        xaxis_title="City - Minimum Education Level",
         yaxis_title="Number of Job Listings"
     )
 

@@ -68,19 +68,64 @@ def update_plots(skills, education_levels, years):
     
     # Plot 1: Education Requirements by Skill
     skill_edu_counts = filtered_df.groupby(['skill_name', 'min_edulevels_name']).size().reset_index(name='count')
-    fig1 = px.bar(skill_edu_counts, x='skill_name', y='count', color='min_edulevels_name', title="Education Requirements by Skill")
+    fig1 = px.bar(
+        skill_edu_counts,
+        x='min_edulevels_name',
+        y='count',
+        color='min_edulevels_name',
+        title="Education Requirements by Skill"
+    )
+
+    # Customizing Axis Titles
+    fig1.update_layout(
+        xaxis_title="Minimum Education Level",  
+        yaxis_title="Number of Job Listings",  
+        title_font_size=20  )
     
+
     # Plot 2: Degree Trend Over Time
     edu_trend = filtered_df.groupby(['year', 'min_edulevels_name']).size().reset_index(name='count')
-    fig2 = px.line(edu_trend, x='year', y='count', color='min_edulevels_name', title="Degree Requirements Over Time")
-    
+    fig2 = px.line(
+        edu_trend,
+        x='year',
+        y='count',
+        color='min_edulevels_name',
+        title="Degree Requirements Over Time"
+    )
+    fig2.update_layout(
+        xaxis_title="Year",
+        yaxis_title="Number of Job Listings"
+    )
+
     # Plot 3: Salary Distribution by Education Level
-    fig3 = px.box(filtered_df, x='min_edulevels_name', y='salary', color='min_edulevels_name', title="Salary Distribution by Education")
-    
+    fig3 = px.box(
+        filtered_df,
+        x='min_edulevels_name',
+        y='salary',
+        color='min_edulevels_name',
+        title="Salary Distribution by Education"
+    )
+    fig3.update_layout(
+        xaxis_title="Minimum Education Level",
+        yaxis_title="Salary (USD)"
+    )
+
     # Plot 4: Education Level by City
     top_cities = filtered_df['city_name'].value_counts().nlargest(10).index
-    city_edu_counts = filtered_df[filtered_df['city_name'].isin(top_cities)].groupby(['city_name', 'min_edulevels_name']).size().reset_index(name='count')
-    fig4 = px.bar(city_edu_counts, x='city_name', y='count', color='min_edulevels_name', title="Education Level by Top Cities")
+    city_edu_counts = filtered_df[filtered_df['city_name'].isin(top_cities)]\
+        .groupby(['city_name', 'min_edulevels_name']).size().reset_index(name='count')
+    fig4 = px.bar(
+        city_edu_counts,
+        x='city_name',
+        y='count',
+        color='city_name',
+        title="Education Level by Top Cities"
+    )
+    fig4.update_layout(
+        xaxis_title="City",
+        yaxis_title="Number of Job Listings"
+    )
+
     
     return fig1, fig2, fig3, fig4
 

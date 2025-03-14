@@ -81,8 +81,8 @@ def update_plots(skills, education_levels, years, skill_subcategories):
         filtered_df = filtered_df[filtered_df['skill_subcategory_name'].isin(skill_subcategories)]
 
     # Plot 1: Education Requirements by Skill
-    skill_edu_counts = filtered_df.groupby(['skill_name', 'min_edulevels_name']).size().reset_index(name='count')
-    
+    skill_edu_counts = filtered_df.groupby('min_edulevels_name').size().reset_index(name='count')
+
     fig1 = px.bar(
         skill_edu_counts,
         x='min_edulevels_name',
@@ -127,8 +127,10 @@ def update_plots(skills, education_levels, years, skill_subcategories):
 
     # Plot 4: Education Level by City
     top_cities = filtered_df['city_name'].value_counts().nlargest(10).index
+ 
     city_edu_counts = filtered_df[filtered_df['city_name'].isin(top_cities)]\
-        .groupby(['city_name', 'min_edulevels_name']).size().reset_index(name='count')
+    .groupby('city_name').size().reset_index(name='count')
+
 
     # Plot with combined labels to remove gaps
     fig4 = px.bar(

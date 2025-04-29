@@ -66,7 +66,7 @@ bash
 Copy
 Edit
 python app.py
-Open your browser and navigate to: http://127.0.0.1:8050/
+Open your browser and navigate to: https://gra-ai-dashboard.onrender.com/ 
 
 The dashboard will automatically refresh as you adjust the dropdowns and slider.
 

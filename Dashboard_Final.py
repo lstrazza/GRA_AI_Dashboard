@@ -20,7 +20,7 @@ app = Dash(__name__)
 
 
 app.layout = html.Div([
-    html.H1("AI Job Market Dashboard"),
+    html.H1("Education Trends in the AI Job Market"),
     
     dcc.Dropdown(
         id='skill-filter',
